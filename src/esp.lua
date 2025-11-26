@@ -283,4 +283,6 @@ plrs.PlayerRemoving:Connect(function(p)
     esp:remove(p)
 end)
 
+getgenv().esp = esp
+
 return esp

@@ -6,7 +6,8 @@ local file = {
 }
 
 for _, dir in ipairs(file) do
-    loadstring(game:HttpGet(root .. dir))()
+    local fn = loadstring(game:HttpGet(root .. dir))
+    if fn then fn() end
 end
 
 print(" load in...".. loadt)
