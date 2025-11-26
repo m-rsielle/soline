@@ -19,5 +19,6 @@ for _, plr in pairs(players:GetPlayers()) do
 end
 
 esp:update({
+    maxDistance = 8000,
     updateRate = 0.08,
 })
