@@ -1,22 +1,30 @@
-local root = "https://raw.githubusercontent.com/m-rsielle/soline/main" 
-local loadt = os.date("%Y-%m-%d %H:%M:%S", os.time())
+-- init.lua (new version)
+local root = "https://raw.githubusercontent.com/m-rsielle/soline/main"
 
-local success, err = pcall(function()
-    local fn = loadstring(game:HttpGet(root .. "/src/esp.lua"))
-    if not fn then error("Failed to load esp.lua") end
-    getgenv().esp = fn()
+-- Load esp.lua first
+local esp_success, esp_module = pcall(function()
+    local code = game:HttpGet(root .. "/src/esp.lua")
+    local fn = loadstring(code)
+    if not fn then error("Failed to compile esp.lua") end
+    return fn()
 end)
-if not success then
-    warn("Error loading esp.lua: " .. tostring(err))
+
+if not esp_success then
+    error("Failed to load ESP module: " .. tostring(esp_module))
 end
 
-success, err = pcall(function()
-    local fn = loadstring(game:HttpGet(root .. "/src/main.lua"))
-    if not fn then error("Failed to load main.lua") end
+getgenv().esp = esp_module
+
+-- Now load main.lua (which uses getgenv().esp)
+local main_success, main_err = pcall(function()
+    local code = game:HttpGet(root .. "/src/main.lua")
+    local fn = loadstring(code)
+    if not fn then error("Failed to compile main.lua") end
     fn()
 end)
-if not success then
-    warn("Error loading main.lua: " .. tostring(err))
+
+if not main_success then
+    warn("Failed to load main.lua: " .. tostring(main_err))
 end
 
-print("Loaded in " .. loadt)
+print("Soline ESP loaded successfully!")
