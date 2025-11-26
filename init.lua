@@ -1,12 +1,11 @@
-local root = "https://raw.githubusercontent.com/YourUsername/YourRepository/main" 
+local root = "https://raw.githubusercontent.com/m-rsielle/soline/main" 
 local loadt = os.date("%Y-%m-%d %H:%M:%S", os.time())
-local modules = {
-    "/drawing.lua",
-    "/hook.lua",
-    "/disableanti.lua",
+local file = {
+    "/src/cache.lua",
+    "/src/main.lua",
 }
 
-for _, dir in ipairs(modules) do
+for _, dir in ipairs(file) do
     loadstring(game:HttpGet(root .. dir))()
 end
 
