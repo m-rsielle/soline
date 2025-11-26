@@ -6,8 +6,14 @@ local file = {
 }
 
 for _, dir in ipairs(file) do
-    local fn = loadstring(game:HttpGet(root .. dir))
-    if fn then fn() end
+    local success, err = pcall(function()
+        local fn = loadstring(game:HttpGet(root .. dir))
+        if not fn then error("Failed to load: " .. dir) end
+        fn()
+    end)
+    if not success then
+        warn("Error loading " .. dir .. ": " .. tostring(err))
+    end
 end
 
-print(" load in...".. loadt)
+print("Loaded in " .. loadt)

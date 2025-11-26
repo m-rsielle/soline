@@ -1,4 +1,6 @@
 local esp = getgenv().esp
+if not esp then error("ESP module not loaded") end
+
 local players = game:GetService("Players")
 
 players.PlayerAdded:Connect(function(plr)
